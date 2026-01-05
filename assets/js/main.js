@@ -13,9 +13,9 @@ document.addEventListener("DOMContentLoaded", () => {
      2) MENU TOGGLE ("X" ANIMATION)
      ========================= */
   const nav = document.getElementById("mySidenav");
-  const menuBtn = document.querySelector(".menu-btn");
+  // UPDATED SELECTOR FOR THE FIXED BUTTON
+  const menuBtn = document.querySelector(".menu-btn-fixed");
 
-  // Global function for the HTML button to call
   window.toggleNav = function() {
     const isOpen = nav.style.width === "250px";
 
@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Close when clicking outside
   document.addEventListener("click", (e) => {
-    // If nav is open AND click is NOT on nav AND NOT on the button
     if (
       nav.style.width === "250px" &&
       !nav.contains(e.target) &&
