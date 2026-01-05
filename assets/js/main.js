@@ -10,32 +10,44 @@ document.addEventListener("DOMContentLoaded", () => {
   setFooterYear();
 
   /* =========================
-     2) MENU TOGGLE & SCROLL BEHAVIOR (UPDATED)
+     2) MENU TOGGLE ("X" ANIMATION)
      ========================= */
   const nav = document.getElementById("mySidenav");
   const menuBtn = document.querySelector(".menu-btn");
 
-  // Make this function global so the HTML button can call it
+  // Global function for the HTML button to call
   window.toggleNav = function() {
-    if (nav.style.width === "250px") {
+    const isOpen = nav.style.width === "250px";
+
+    if (isOpen) {
+      // Close
       nav.style.width = "0";
+      menuBtn.classList.remove("is-active");
     } else {
+      // Open
       nav.style.width = "250px";
+      menuBtn.classList.add("is-active");
     }
   };
 
-  // Close menu when scrolling (User friendly update)
+  // Close when scrolling
   window.addEventListener("scroll", () => {
     if (nav.style.width === "250px") {
       nav.style.width = "0";
+      menuBtn.classList.remove("is-active");
     }
   });
 
-  // Close menu if clicking outside of it
+  // Close when clicking outside
   document.addEventListener("click", (e) => {
-    // If nav is open AND click is NOT on nav AND NOT on the menu button
-    if (nav.style.width === "250px" && !nav.contains(e.target) && !menuBtn.contains(e.target)) {
+    // If nav is open AND click is NOT on nav AND NOT on the button
+    if (
+      nav.style.width === "250px" &&
+      !nav.contains(e.target) &&
+      !menuBtn.contains(e.target)
+    ) {
       nav.style.width = "0";
+      menuBtn.classList.remove("is-active");
     }
   });
 
@@ -51,7 +63,7 @@ document.addEventListener("DOMContentLoaded", () => {
       
       const rect = target.getBoundingClientRect();
       const currentScroll = scroller === window ? window.scrollY || window.pageYOffset : scroller.scrollTop;
-      const offset = currentScroll + rect.top - 80; // adjusted for new header
+      const offset = currentScroll + rect.top - 80;
 
       scroller.scrollTo({
         top: offset,
