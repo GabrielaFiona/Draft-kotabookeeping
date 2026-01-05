@@ -571,64 +571,58 @@ h3{
 }
 
 /* =========================================================
-   HEADER & MENU UPDATES
+   UPDATED HEADER & MENU STYLES
    ========================================================= */
 
-/* 1. BRAND TITLE SECTION (Top Centered - Scrolls Away) */
-.brand-header-scroll {
-  background-color: var(--blue-900);
-  padding: 20px;
+/* 1. TITLE CONTAINER (Static, Scrolls away) */
+.brand-title-block {
   text-align: center;
-  /* Not sticky, so it scrolls away */
-  position: relative; 
-  width: 100%;
+  padding: 30px 20px 20px;
+  background-color: var(--blue-900);
+  /* Relative so it flows naturally with page */
+  position: relative;
+  z-index: 100;
 }
 
 .brand-title-large {
-  font-family: "Bodoni Moda", serif; /* Original Font */
+  font-family: "Bodoni Moda", serif;
   font-size: clamp(2rem, 5vw, 3rem); /* Responsive Large size */
-  color: var(--white); /* White text */
+  color: var(--white);
   text-decoration: none;
   font-weight: 700;
   letter-spacing: 0.5px;
 }
 
-/* 2. STICKY MENU WRAPPER (Left Side) */
-.menu-sticky-wrapper {
-  /* Using STICKY ensures it starts below title and sticks to top */
-  position: -webkit-sticky;
-  position: sticky;
-  top: 20px; /* Distance from top when stuck */
-  z-index: 2000;
-  margin-left: 20px; /* Left align */
-  width: fit-content;
-  height: 0; /* Prevents layout displacement */
-  overflow: visible;
-}
-
-/* 3. MENU BUTTON STYLE (X Animation Supported) */
-.menu-btn {
+/* 2. MENU BUTTON (FIXED, Sticky) */
+/* We remove the wrapper and style the button directly to be fixed */
+.menu-btn-fixed {
+  position: fixed;
+  top: 30px; /* Aligns visually next to title initially */
+  left: 20px;
+  z-index: 2000; /* Highest priority */
+  
   background: var(--blue-900);
   border: 1px solid rgba(255,255,255,0.3);
-  border-radius: 50%; /* Circle */
+  border-radius: 50%;
   cursor: pointer;
   padding: 10px;
   width: 50px;
   height: 50px;
+  
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
 }
 
-.menu-btn:hover {
+.menu-btn-fixed:hover {
   border-color: var(--gold);
   transform: scale(1.05);
 }
 
-.menu-btn span {
+.menu-btn-fixed span {
   display: block;
   width: 24px;
   height: 2px;
@@ -638,36 +632,34 @@ h3{
   transform-origin: center;
 }
 
-/* "X" State */
-.menu-btn.is-active {
+/* "X" State for Button */
+.menu-btn-fixed.is-active {
   background: var(--blue-900);
   border-color: var(--gold);
 }
 
-.menu-btn.is-active span:nth-child(1) {
+.menu-btn-fixed.is-active span:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
 }
-
-.menu-btn.is-active span:nth-child(2) {
+.menu-btn-fixed.is-active span:nth-child(2) {
   opacity: 0;
 }
-
-.menu-btn.is-active span:nth-child(3) {
+.menu-btn-fixed.is-active span:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
 
-/* 4. SIDE NAV DRAWER */
+/* 3. SIDE NAV DRAWER */
 .side-nav {
   height: 100%;
   width: 0; /* Toggled by JS */
   position: fixed;
-  z-index: 1999; /* Under button (2000) */
+  z-index: 1999; /* Just below the button */
   top: 0;
   left: 0;
   background-color: rgba(50, 60, 84, 0.98);
   overflow-x: hidden;
   transition: 0.4s ease-in-out;
-  padding-top: 100px; /* Clearance for button */
+  padding-top: 100px; /* Clearance for the button */
   box-shadow: 4px 0 15px rgba(0,0,0,0.4);
 }
 
@@ -695,7 +687,7 @@ h3{
   border-left: 4px solid var(--gold);
 }
 
-/* 5. REVIEWS WIDGET */
+/* 4. REVIEWS WIDGET */
 .review-block {
   background: var(--white);
   border: 1px solid rgba(27,36,57,.12);
@@ -707,41 +699,12 @@ h3{
   position: relative;
   text-align: center;
 }
-
-.review-stars {
-  color: var(--gold);
-  font-size: 1.4rem;
-  margin-bottom: 12px;
-}
-
-.review-text {
-  font-size: 1.15rem;
-  font-style: italic;
-  color: var(--ink);
-  line-height: 1.7;
-}
-
-.review-author {
-  margin-top: 16px;
-  font-weight: 700;
-  font-family: "Bodoni Moda", serif;
-  color: var(--blue-900);
-}
-
+.review-stars { color: var(--gold); font-size: 1.4rem; margin-bottom: 12px; }
+.review-text { font-size: 1.15rem; font-style: italic; color: var(--ink); line-height: 1.7; }
+.review-author { margin-top: 16px; font-weight: 700; font-family: "Bodoni Moda", serif; color: var(--blue-900); }
 .review-google-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-top: 20px;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--blue-300);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: 0.2s;
+  display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+  font-size: 0.95rem; font-weight: 600; color: var(--blue-300);
+  text-decoration: none; border-bottom: 1px solid transparent;
 }
-
-.review-google-btn:hover {
-  color: var(--blue-900);
-  border-bottom-color: var(--blue-900);
-}
+.review-google-btn:hover { color: var(--blue-900); border-bottom-color: var(--blue-900); }
