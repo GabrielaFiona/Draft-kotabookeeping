@@ -11,8 +11,6 @@
   --ink:#1b2439;
   --ink-80:#2c354d;
   --white:#ffffff;
-  /* NEW VARIABLE FOR HEADER HEIGHT */
-  --header-height: 80px;
 }
 
 /* =========================
@@ -36,8 +34,6 @@ body{
   background:var(--blue-900);
   color:var(--ink);
   line-height:1.6;
-  /* PUSH CONTENT DOWN SO HEADER DOESNT COVER IT */
-  padding-top: var(--header-height);
 }
 
 /* =========================
@@ -574,106 +570,117 @@ h3{
   text-align:center;
 }
 
-
 /* =========================================================
-   NEW UPDATES: STICKY HEADER & REVIEWS
-   (Appended below to avoid breaking original code)
+   UPDATES START HERE
    ========================================================= */
 
-/* 1. STICKY HEADER CONTAINER 
-   Ensures logo and menu button sit side-by-side */
-.site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--header-height);
+/* 1. SCROLLING TITLE HEADER */
+.brand-header-scroll {
   background-color: var(--blue-900);
-  border-bottom: 1px solid rgba(255,255,255,0.1);
-  z-index: 1000;
-  
-  /* THIS IS THE KEY FIX FOR STACKING: */
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  
-  padding: 0 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 30px 20px 10px 20px; /* Spacing for the title */
+  text-align: center;
+  border-bottom: 1px solid rgba(255,255,255,0.05);
 }
-
-.brand-logo {
+.brand-title-large {
   font-family: "Bodoni Moda", serif;
-  font-size: 1.2rem;
+  font-size: clamp(24px, 5vw, 42px);
   color: var(--white);
   text-decoration: none;
   font-weight: 700;
-  letter-spacing: 0.5px;
 }
 
-/* 2. MENU BUTTON (Migrated from HTML Styles) */
+/* 2. STICKY HAMBURGER MENU (Positioned Left, Sticks on scroll) */
+.menu-sticky-wrapper {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 20px;  /* Sticks 20px from top of viewport */
+  z-index: 2000;
+  margin-left: 20px; /* Positioned on the Left */
+  width: fit-content;
+  height: 0; 
+  overflow: visible;
+}
+
 .menu-btn {
-  /* Removed 'position: fixed' because it is now inside the flex header */
-  background: none;
-  border: none;
+  background: var(--blue-900);
+  border: 1px solid rgba(255,255,255,0.2);
+  border-radius: 50%;
   cursor: pointer;
   padding: 10px;
+  width: 50px;
+  height: 50px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+.menu-btn:hover {
+  border-color: var(--gold);
+  transform: scale(1.05);
 }
 
 .menu-btn span {
   display: block;
-  width: 30px;
-  height: 3px;
+  width: 24px;
+  height: 2px;
   background-color: var(--gold);
-  margin: 5px 0;
-  transition: 0.4s;
+  margin: 2px 0;
+  transition: all 0.4s ease-in-out;
+  transform-origin: center;
 }
 
-/* 3. SIDE NAV (Migrated from HTML Styles) */
+/* "X" Animation State */
+.menu-btn.is-active {
+  border-color: var(--gold);
+}
+.menu-btn.is-active span:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+.menu-btn.is-active span:nth-child(2) {
+  opacity: 0;
+}
+.menu-btn.is-active span:nth-child(3) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+/* 3. CLEANER, NEATER SIDE NAV */
 .side-nav {
   height: 100%;
-  width: 0;
+  width: 0; 
   position: fixed;
-  z-index: 999;
-  /* Start BELOW the new sticky header */
-  top: var(--header-height);
+  z-index: 1999;
+  top: 0;
   left: 0;
-  background-color: var(--blue-900);
+  background-color: rgba(50, 60, 84, 0.98); /* Slight opacity */
   overflow-x: hidden;
   transition: 0.4s ease-in-out;
-  padding-top: 30px;
-  border-top: 1px solid rgba(255,255,255,0.05);
-  box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+  padding-top: 100px; /* Clearance for top button */
+  box-shadow: 5px 0 20px rgba(0,0,0,0.3);
+  backdrop-filter: blur(5px);
 }
-
 .side-nav a {
-  padding: 20px 30px;
+  padding: 15px 30px;
   text-decoration: none;
-  font-size: 1.3rem;
-  color: #f1f1f1;
+  font-size: 1.1rem; /* Neater, smaller text */
+  color: #e0e0e0;
   display: block;
-  transition: 0.3s;
-  font-family: "Bodoni Moda", serif;
-  border-bottom: 1px solid rgba(255,255,255,0.05);
+  transition: 0.2s;
+  font-family: "Lora", serif;
+  border-bottom: 1px solid rgba(255,255,255,0.03);
 }
-
 .side-nav a:hover {
   color: var(--gold);
   background-color: rgba(255,255,255,0.05);
-  padding-left: 40px;
+  padding-left: 35px;
 }
-
-/* Booking button highlight in menu */
 .side-nav a.nav-book-btn {
+  margin-top: 20px;
   background: rgba(201, 155, 65, 0.15);
   color: var(--gold);
-  border-left: 4px solid var(--gold);
-}
-.side-nav a.nav-book-btn:hover {
-  background: var(--gold);
-  color: var(--ink);
+  border-left: 3px solid var(--gold);
+  font-weight: 700;
 }
 
 /* 4. REVIEWS SECTION STYLES */
