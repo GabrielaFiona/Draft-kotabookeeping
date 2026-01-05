@@ -11,6 +11,7 @@
   --ink:#1b2439;
   --ink-80:#2c354d;
   --white:#ffffff;
+  --header-height: 70px; /* New compact height */
 }
 
 /* =========================
@@ -34,6 +35,8 @@ body{
   background:var(--blue-900);
   color:var(--ink);
   line-height:1.6;
+  /* Push content down so the blue bar doesn't cover the top of the Hero */
+  padding-top: var(--header-height); 
 }
 
 /* =========================
@@ -571,60 +574,56 @@ h3{
 }
 
 /* =========================================================
-   UPDATED HEADER & MENU STYLES
+   NEW: SMART HEADER (Hide on Scroll Down, Show on Up)
    ========================================================= */
 
-/* 1. TITLE CONTAINER (Static, Scrolls away) */
-.brand-title-block {
-  text-align: center;
-  padding: 30px 20px 20px;
-  background-color: var(--blue-900);
-  /* Relative so it flows naturally with page */
-  position: relative;
-  z-index: 100;
-}
-
-.brand-title-large {
-  font-family: "Bodoni Moda", serif;
-  font-size: clamp(2rem, 5vw, 3rem); /* Responsive Large size */
-  color: var(--white);
-  text-decoration: none;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-}
-
-/* 2. MENU BUTTON (FIXED, Sticky) */
-/* We remove the wrapper and style the button directly to be fixed */
-.menu-btn-fixed {
+/* 1. THE BAR ITSELF (Fixed, Blue, Full Width) */
+.smart-header {
   position: fixed;
-  top: 30px; /* Aligns visually next to title initially */
-  left: 20px;
-  z-index: 2000; /* Highest priority */
-  
-  background: var(--blue-900);
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--header-height);
+  background-color: var(--blue-900);
+  display: flex;
+  align-items: center;
+  padding-left: 20px; /* Space for the button */
+  z-index: 2000;
+  /* Animate the slide up/down */
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+
+/* JS will add this class when scrolling DOWN */
+.smart-header.scroll-down {
+  transform: translateY(-100%);
+}
+
+/* 2. THE MENU BUTTON */
+.menu-btn {
+  background: transparent;
   border: 1px solid rgba(255,255,255,0.3);
   border-radius: 50%;
   cursor: pointer;
   padding: 10px;
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   transition: all 0.3s ease;
 }
 
-.menu-btn-fixed:hover {
+.menu-btn:hover {
   border-color: var(--gold);
   transform: scale(1.05);
 }
 
-.menu-btn-fixed span {
+.menu-btn span {
   display: block;
-  width: 24px;
+  width: 22px;
   height: 2px;
   background-color: var(--gold);
   margin: 2px 0;
@@ -633,18 +632,16 @@ h3{
 }
 
 /* "X" State for Button */
-.menu-btn-fixed.is-active {
-  background: var(--blue-900);
+.menu-btn.is-active {
   border-color: var(--gold);
 }
-
-.menu-btn-fixed.is-active span:nth-child(1) {
+.menu-btn.is-active span:nth-child(1) {
   transform: translateY(6px) rotate(45deg);
 }
-.menu-btn-fixed.is-active span:nth-child(2) {
+.menu-btn.is-active span:nth-child(2) {
   opacity: 0;
 }
-.menu-btn-fixed.is-active span:nth-child(3) {
+.menu-btn.is-active span:nth-child(3) {
   transform: translateY(-6px) rotate(-45deg);
 }
 
@@ -653,13 +650,13 @@ h3{
   height: 100%;
   width: 0; /* Toggled by JS */
   position: fixed;
-  z-index: 1999; /* Just below the button */
+  z-index: 1999; /* Below the header bar */
   top: 0;
   left: 0;
   background-color: rgba(50, 60, 84, 0.98);
   overflow-x: hidden;
   transition: 0.4s ease-in-out;
-  padding-top: 100px; /* Clearance for the button */
+  padding-top: var(--header-height); /* Starts content below the blue bar */
   box-shadow: 4px 0 15px rgba(0,0,0,0.4);
 }
 
